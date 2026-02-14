@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/word-journey/',  // GitHub Pages repo name - change this to match your repo
+  base: 'https://github.com/melcikoo/word-journey/',  // GitHub Pages repo name - change this to match your repo
 })
