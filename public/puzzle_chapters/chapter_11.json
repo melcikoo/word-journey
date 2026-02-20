@@ -1,0 +1,45 @@
+{
+  "id": 11,
+  "title": "잊혀진 정원",
+  "subtitle": "기억 속에 피어난 꽃",
+  "avatarMood": 1,
+  "accentColor": "#60a5fa",
+  "narrativeIntro": "오래된 정원의 문이 열렸다.\n이끼 낀 돌담 너머로\n잊혀진 꽃들이 피어 있었다.",
+  "completionIllust": "🌸",
+  "completionNarrative": "정원의 꽃들이 다시 피었다.\n기억은 사라지지 않고\n어딘가에서 기다리고 있었다.",
+  "crossword": {
+    "size": 5,
+    "words": [
+      {
+        "word": "기억",
+        "clue": "지나간 일을 마음속에 간직함. 記憶.",
+        "hint2": "\"어릴 적 ○○이 떠올랐다.\"",
+        "hint3char": { "index": 0, "char": "기" },
+        "direction": "across",
+        "row": 0,
+        "col": 0
+      },
+      {
+        "word": "억울",
+        "clue": "마땅한 이유 없이 꾸중을 듣거나 벌을 받아 분함. 抑鬱.",
+        "hint2": "\"아무리 설명해도 ○○한 마음이 풀리지 않았다.\"",
+        "hint3char": { "index": 0, "char": "억" },
+        "direction": "down",
+        "row": 0,
+        "col": 1
+      },
+      {
+        "word": "울림",
+        "clue": "소리가 퍼져 나가 되돌아오는 것. 또는 감동.",
+        "hint2": "\"그 노래는 깊은 ○○을 주었다.\"",
+        "hint3char": { "index": 0, "char": "울" },
+        "direction": "across",
+        "row": 1,
+        "col": 1
+      }
+    ],
+    "collectibleWord": "기억",
+    "collectibleDef": "記憶 — 지나간 일을 마음속에 간직하는 것",
+    "collectibleRarity": "rare"
+  }
+}
