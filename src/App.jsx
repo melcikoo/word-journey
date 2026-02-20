@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-const CHAPTERS = [
+const BASE_CHAPTERS = [
   // ═══ ACT 1: 어둠 (계단소 3단어) ═══
   {
     id: 1, title: "잿빛 새벽", subtitle: "아무것도 느끼지 못하는 날들",
@@ -1044,8 +1044,8 @@ const CollectionCard = ({ word, definition, rarity, chapterTitle, index, onRevie
 };
 
 /* ── Review Modal (completed puzzle review) ── */
-const ReviewModal = ({ chapterIndex, hintLevels, onClose }) => {
-  const chapter = CHAPTERS[chapterIndex];
+const ReviewModal = ({ chapterIndex, hintLevels, onClose, chapters }) => {
+  const chapter = chapters[chapterIndex];
   const { crossword } = chapter;
   const [selectedWord, setSelectedWord] = useState(null);
 
@@ -1186,6 +1186,7 @@ const ReviewModal = ({ chapterIndex, hintLevels, onClose }) => {
 
 /* ── Main ── */
 export default function WordJourneyGame() {
+  const [extraChapters, setExtraChapters] = useState([]);
   const [currentChapter, setCurrentChapter] = useState(0);
   const [completedChapters, setCompletedChapters] = useState([]);
   const [collection, setCollection] = useState([]);
@@ -1197,6 +1198,30 @@ export default function WordJourneyGame() {
   const [hintLevels, setHintLevels] = useState({});
   const [solved, setSolved] = useState({});
   const [reviewItem, setReviewItem] = useState(null);
+
+  // Load extra chapters from /puzzle_chapters/
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL || "/";
+    fetch(`${base}puzzle_chapters/index.json`)
+      .then(r => r.ok ? r.json() : { chapters: [] })
+      .then(data => {
+        if (!data.chapters || data.chapters.length === 0) return;
+        return Promise.all(
+          data.chapters.map(filename =>
+            fetch(`${base}puzzle_chapters/${filename}`).then(r => r.json())
+          )
+        );
+      })
+      .then(loaded => {
+        if (loaded && loaded.length > 0) {
+          const sorted = loaded.sort((a, b) => a.id - b.id);
+          setExtraChapters(sorted);
+        }
+      })
+      .catch(() => {}); // Silently ignore if no extra chapters
+  }, []);
+
+  const CHAPTERS = [...BASE_CHAPTERS, ...extraChapters];
 
   const chapter = CHAPTERS[currentChapter];
   const avatarMood = gameComplete ? 3 : completedChapters.length > 0 ? CHAPTERS[completedChapters[completedChapters.length - 1]].avatarMood : 0;
@@ -1497,6 +1522,7 @@ export default function WordJourneyGame() {
           chapterIndex={reviewItem.chapterIndex}
           hintLevels={reviewItem.hintLevels}
           onClose={() => setReviewItem(null)}
+          chapters={CHAPTERS}
         />
       )}
 
